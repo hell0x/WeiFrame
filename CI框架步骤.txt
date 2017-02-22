@@ -1,0 +1,48 @@
+index.php
+1.定义ENVIRONMENT
+2.根据不同的ENVIRONMENT展示不同的错误报告(error_reporting  ini_set)
+3.定义变量$system_path,$application_folder,$view_folder
+4.解析系统路径以$system_path提高可靠性
+5.定义常量SELF,BASEPATH(由解析好的$system_path定义),FCPATH,SYSDIR
+6.解析应用路径$application_folder以提高可靠性
+7.定义常量APPPATH(由解析好的$application_folder定义)
+8.解析应用路径$view_folder以提高可靠性
+9.定义常量VIEWPATH(由解析好的$view_folder定义)
+10.引入CI核心文件CodeIgniter.php
+
+CodeIgniter.php
+1.判断BASEPATH是否被定义，没有定义则报错
+2.定义CI版本常量CI_VERSION
+3.加载CI的常量文件constants.php(先加载ENVIRONMENT的constants.php)
+4.加载公共函数文件Common.php
+5.如果版本小于5.4进行全局变量安全处理
+6.自定义错误、异常和程序完成的函数
+	a)设置错误处理set_error_handler('_error_handler');
+	b)设置异常处理set_exception_handler('_exception_handler');
+	c)当页面被用户强制停止时、当程序代码运行超时时、当php代码执行完成时register_shutdown_function('_shutdown_handler');
+7.检查并设置类前缀
+8.加载composer
+9.加载Benchmark类，用于记录各种时间点、记录内存使用参数，便于性能测试和追踪
+10.加载Hooks类(钩子类)，用于在不改变CI核心的基础上改变或者增加系统的核心运行功能
+11.加载Config类，用于配置管理组件，主要用于加载配置文件、获取和设置配置项等
+12.判断和设置mbstring扩展
+13.判断和设置iconv扩展
+14.如果php版本大于5.6，设置php.internal_encoding
+15.加载兼容性功能(BASEPATH.'core/compat/')
+	a)mbstring.php
+	b)hash.php
+	c)password.php
+	d)standard.php
+16.加载Utf8类，用于对UTF-8字符集处理的相关支持。其他组件如INPUT组件，需要改组件的支持。
+17.加载URI类，用于解析URI（Uniform Rescource Identifier）参数等
+18.加载Router类，路由组件。通过URI组件的参数解析，决定数据流向（路由）。
+19.加载Output类，最终的输出管理组件，掌管着CI的最终输出（海关啊）。
+20.判断是否有有效缓存文件，有则退出
+21.加载Security类，此为安全处理组件
+22.加载Input类，用于获取输入以及表单验证
+23.加载Lang类，用于设置框架语言
+23.实例化控制器，安全性验证、实际处理请求
+24.路由的设置与判断
+25.检查_remap
+26.解析请求的类，并调用请求的方法
+27.输出
