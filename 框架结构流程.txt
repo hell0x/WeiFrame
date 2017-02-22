@@ -1,0 +1,25 @@
+application 应用程序目录
+	home  模块目录\
+		controller
+		model
+		view
+config  配置文件
+runtime 
+	cache
+	compile
+	log
+system
+	core   框架核心目录
+	start.php   框架启动目录
+index.php
+
+
+仿CI框架
+index.php 入口文件
+	定义常量  DS和ROOT_PATH
+	定义 APP_PATH, CONF_PATH, RUNTIME_PATH, SYSTEME_PATH, CORE_PATH
+	引入框架引导文件
+WeiLead.php 引导文件
+	？(引入常量定义文件)  暂时不用
+	引入全局函数文件 Common.php
+	
