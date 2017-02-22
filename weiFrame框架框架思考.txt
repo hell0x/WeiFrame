@@ -14,7 +14,7 @@ system
 index.php
 
 
-仿CI框架
+仿CI框架v1.0(简洁版)
 index.php 入口文件
 	定义常量  DS和ROOT_PATH
 	定义 APP_PATH, CONF_PATH, RUNTIME_PATH, SYSTEME_PATH, CORE_PATH
@@ -22,4 +22,5 @@ index.php 入口文件
 WeiLead.php 引导文件
 	？(引入常量定义文件)  暂时不用
 	引入全局函数文件 Common.php
-	
+	？（错误异常处理）  暂时不写  (以后写错误，异常处理类)
+	引入config配置文件  暂时不写  (以后写一个config配置处理类)
