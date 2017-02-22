@@ -1,0 +1,30 @@
+1. set_error_handler('_error_handler')    (CodeIgniter.php)
+	_error_handler函数
+		a) set_status_header
+			is_cli
+			show_error
+				load_class
+				$_error->show_error
+		b) load_class(加载Exceptions.php)
+			config_item
+			set_status_header
+			is_loaded
+		c) $_error->log_exception   (Exceptions.php)
+			log_message
+				load_class(加载Log.php)
+				$_log[0]->write_log     (Log.php)
+		d) $_error->show_php_error
+			config_item
+			is_cli
+
+2. set_exception_handler('_exception_handler');
+	_exception_handler函数
+		load_class(加载Exceptions.php)
+		$_error->log_exception
+		$_error->show_exception
+			config_item
+			is_cli
+			set_status_header
+		
+3. register_shutdown_function('_shutdown_handler');
+	_error_handler
