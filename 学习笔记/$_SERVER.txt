@@ -1,0 +1,4 @@
+$_SERVER['QUERY_STRING']   获取网址?后面的值
+$_SERVER['REQUEST_URI']    获取http://domain后面的值，包括/
+$_SERVER['SCRIPT_NAME']    获取当前脚本的路径，__FILE__常量获取当前脚本的完整路径和文件名
+$_SERVER['PHP_SELF']       获取当前执行脚本的文件名
