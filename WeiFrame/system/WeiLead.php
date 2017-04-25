@@ -10,4 +10,7 @@ require_once BASEPATH.'Common.php';
 
 //引入地址解析类
 $URI = &load_class('URI', 'core');
+echo "<pre>";
+print_r($URI);
+echo "</pre>";
 ?>
