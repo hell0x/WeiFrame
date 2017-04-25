@@ -9,8 +9,8 @@ require_once BASEPATH.'Common.php';
 //暂时不写...
 
 //引入地址解析类
-$URI = &load_class('URI', 'core');
-echo "<pre>";
-print_r($URI);
-echo "</pre>";
+// $URI = &load_class('URI', 'core');
+
+//引入路由类,并实例化控制器
+$ROU = &load_class('Router', 'core');
 ?>
