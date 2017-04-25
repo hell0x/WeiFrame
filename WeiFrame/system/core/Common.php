@@ -40,7 +40,7 @@ if(!function_exists('load_class')){
 		}
 
 		//实例化类，并存入数组
-		$_classes[$class] = isset($param) ? new $class($param) : new $class();
+		$_classes[$class] = isset($param) ? new $name($param) : new $name();
 		
 		return $_classes[$class];
 	}
