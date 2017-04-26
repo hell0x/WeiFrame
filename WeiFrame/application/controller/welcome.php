@@ -1,11 +1,9 @@
 <?php
-class welcome{
+class welcome extends Wei_controller{
 
 	public function index($str){
-		echo "<pre>";
-		print_r($this);
-		echo "</pre>";
-		echo "hello, ".$str;
+		$this->assign('name', $str);
+		$this->display('welcome');
 	}
 }
 ?>
