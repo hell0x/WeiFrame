@@ -13,7 +13,6 @@ require_once BASEPATH.'Common.php';
 
 //加载控制器基类
 require_once BASEPATH.'Controller.php';
-$config = &get_config();
 
 //加载路由类,并实例化控制器
 $ROU = &load_class('Router', 'core');

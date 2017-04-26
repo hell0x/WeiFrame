@@ -42,7 +42,7 @@
         <div class="container">
             <div class="content">
                 <div class="title">Wei Framework</div>
-                <span class="line"><b>{?php echo $name?}</b></span>
+                <span class="line"><b><?php echo $name;?></b></span>
             </div>
         </div>
     </body>
