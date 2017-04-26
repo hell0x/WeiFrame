@@ -45,4 +45,21 @@ if(!function_exists('load_class')){
 		return $_classes[$class];
 	}
 }
+
+if(!function_exists('get_config')){
+
+	function &get_config(){
+		static $config;
+
+		if(empty($config)){
+			$file_path = CONF_PATH.'config.php';
+			if(file_exists($file_path)){
+				require_once($file_path);
+			}else{
+				exit('The configuration file does not exist.');
+			}
+		}
+		return $config;
+	}
+}
 ?>
