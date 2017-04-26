@@ -21,9 +21,9 @@ class Wei_controller{
 
 	//模板展示
 	final protected function display($tpl){
-		require_once BASEPATH.'View.php';
-		$view = new Wei_View($this->vars);
-		die;
+		// require_once BASEPATH.'View.php';
+		// $view = new Wei_View($this->vars);
+		$view = &load_class('View', 'core', $this->vars);
 		$view->display($tpl);
 	}
 }

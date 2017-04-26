@@ -2,7 +2,7 @@
 class Wei_View{
 
 	//模板变量
-	public $vars;
+	public $vars = array();
 	//配置
 	private $config;
 
@@ -12,14 +12,13 @@ class Wei_View{
 		if(!is_dir($this->config['cache_path']) || !is_dir($this->config['view_path'])){
 			exit('the dicectory not exists');
 		}
-		echo "<pre>";
-		print_r($vars);
-		echo "</pre>";
-		$this->$vars = $vars;
-		var_dump($this->$vars);
+		foreach($vars as $key => $val){
+			$this->vars[$key] = $val;
+		}
 	}
 
 	public function display($tpl){
+		extract($this->vars);
 		$view_path = $this->config['view_path'].$tpl.'.php';
 		$cache_path = $this->config['cache_path'].$tpl.'.php';
 		if(!file_exists($view_path)){
@@ -34,7 +33,7 @@ class Wei_View{
 				ob_start();
 				require_once($view_path);
 				file_put_contents($cache_path, ob_get_contents());
-				ob_end_clean();
+				ob_end_flush();
 			}
 		}
 	}
