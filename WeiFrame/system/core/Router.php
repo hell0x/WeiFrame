@@ -8,13 +8,16 @@ class Wei_Router{
 		$param = $URI->segments['param'];
 		//调用控制器文件
 		$controller_path = APP_PATH.'controller'.DS.$controller.'.php';
+		if(!file_exists($controller_path)){
+			show_404();
+		}
 		require_once($controller_path);
 		//实例化控制器
 		$dispatch = new $controller();
 		if ((int)method_exists($controller, $action)) {
             call_user_func_array(array($dispatch, $action), $param);
         } else {
-            exit($controller . "控制器不存在");
+            show_404('error_404', $controller.'/'.$action.' was not Found');
         }
 	}	
 }

@@ -5,6 +5,9 @@
 //引入全局函数文件
 require_once BASEPATH.'Common.php';
 
+set_error_handler('_error_handler');
+// set_exception_handler('_exception_handler');
+
 //错误异常处理
 //暂时不写...
 
