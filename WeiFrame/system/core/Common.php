@@ -46,6 +46,9 @@ if(!function_exists('load_class')){
 	}
 }
 
+/**
+ * 获取配置的函数
+ */
 if(!function_exists('get_config')){
 
 	function &get_config(){
@@ -60,6 +63,118 @@ if(!function_exists('get_config')){
 			}
 		}
 		return $config;
+	}
+}
+
+/**
+ * 自定义PHP错误处理函数
+ * 当出现PHP错误时触发此函数
+ */
+if(!function_exists('_error_handler')){
+
+	function _error_handler(){
+		// var_dump($severity);
+		echo "error";
+	}
+}
+
+/**
+ * 错误处理函数
+ * 可根据需要使用此函数产生错误页面
+ * @param 错误信息
+ * @param 状态码
+ * @param 错误信息头
+ */
+if(!function_exists('show_error')){
+
+	function show_error($message, $status_code=500, $template='error_default', $heading="error message"){
+
+		$_error = &load_class('Exceptions', 'core');
+		echo $_error->show_error($message, $status, $template, $heading);
+	}
+}
+
+/**
+ * 404处理函数
+ * @param 页面名称
+ */
+if(!function_exists('show_404')){
+
+	function show_404($template = 'error_404', $message='The page you requested was not found.'){
+		$_error = &load_class('Exceptions', 'core');
+		echo $_error->show_404($template, $message);
+	}
+}
+
+/**
+ * 设置HTTP的状态头
+ * @param 状态码
+ * @param 状态信息
+ */
+if(!function_exists('set_status_header')){
+
+	function set_status_header($code, $text=''){
+		//确定状态码是数字
+		if (empty($code) OR ! is_numeric($code)){
+			show_error('Status codes must be numeric', 500);
+		}
+		is_int($code) OR $code = (int)$code;
+		if(empty($code)){
+			$s_code = array(
+				100	=> 'Continue',
+				101	=> 'Switching Protocols',
+
+				200	=> 'OK',
+				201	=> 'Created',
+				202	=> 'Accepted',
+				203	=> 'Non-Authoritative Information',
+				204	=> 'No Content',
+				205	=> 'Reset Content',
+				206	=> 'Partial Content',
+
+				300	=> 'Multiple Choices',
+				301	=> 'Moved Permanently',
+				302	=> 'Found',
+				303	=> 'See Other',
+				304	=> 'Not Modified',
+				305	=> 'Use Proxy',
+				307	=> 'Temporary Redirect',
+
+				400	=> 'Bad Request',
+				401	=> 'Unauthorized',
+				402	=> 'Payment Required',
+				403	=> 'Forbidden',
+				404	=> 'Not Found',
+				405	=> 'Method Not Allowed',
+				406	=> 'Not Acceptable',
+				407	=> 'Proxy Authentication Required',
+				408	=> 'Request Timeout',
+				409	=> 'Conflict',
+				410	=> 'Gone',
+				411	=> 'Length Required',
+				412	=> 'Precondition Failed',
+				413	=> 'Request Entity Too Large',
+				414	=> 'Request-URI Too Long',
+				415	=> 'Unsupported Media Type',
+				416	=> 'Requested Range Not Satisfiable',
+				417	=> 'Expectation Failed',
+				422	=> 'Unprocessable Entity',
+
+				500	=> 'Internal Server Error',
+				501	=> 'Not Implemented',
+				502	=> 'Bad Gateway',
+				503	=> 'Service Unavailable',
+				504	=> 'Gateway Timeout',
+				505	=> 'HTTP Version Not Supported'
+			);
+		}
+		if(isset($s_code[$code])){
+			$text = $s_code[$code];
+		}else{
+			$text = 'No status text available';
+		}
+		$protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
+		header($protocol.' '.$code.' '.$text, TRUE, $code);
 	}
 }
 ?>
