@@ -1,0 +1,4 @@
+show_error()			处理自定义情况，产生错误信息
+_error_handler()		当脚本运行出现问题时，触发此函数
+set_status_header()		设置HTTP头信息
+show_404()				
