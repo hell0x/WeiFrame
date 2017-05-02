@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>error_default</title>
+<title>error_php</title>
 <style>
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
@@ -122,7 +122,7 @@ body {
 #main #header h1 {
     position: relative;
     display: block;
-    font: 72px 'TeXGyreScholaBold', Arial, sans-serif;
+    font: 60px 'TeXGyreScholaBold', Arial, sans-serif;
     color: #0061a5;
     text-shadow: 2px 2px #f7f7f7;
     text-align: center;
@@ -182,10 +182,11 @@ body {
 <div id="wrapper"><a class="logo" href="/"></a>
   <div id="main">
     <header id="header">
-      <h1><span class="icon">!</span><?=$status_code?><span class="sub"><?=$heading?></span></h1>
+      <h1><span class="icon">!</span><?=$severity?><span class="sub"></span></h1>
     </header>
     <div id="content">
-      <h2><?=$message?></h2>
+      <h2><?php echo "[$severity] $errstr";
+     echo " Error on line $errline in $errfile<br>";?></h2>
     </div>
     </div>
   </div>

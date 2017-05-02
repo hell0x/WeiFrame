@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>error_default</title>
+<title>error_404</title>
 <style>
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
@@ -185,7 +185,12 @@ body {
       <h1><span class="icon">!</span><?=$status_code?><span class="sub"><?=$heading?></span></h1>
     </header>
     <div id="content">
-      <h2><?=$message?></h2>
+        <h2>
+            <p>Type: <?php echo get_class($exception); ?></p>
+            <p>Message: <?php echo $message; ?></p>
+            <p>Filename: <?php echo $exception->getFile(); ?></p>
+            <p>Line Number: <?php echo $exception->getLine(); ?></p>
+        </h2>
     </div>
     </div>
   </div>
