@@ -72,9 +72,38 @@ if(!function_exists('get_config')){
  */
 if(!function_exists('_error_handler')){
 
-	function _error_handler(){
-		// var_dump($severity);
-		echo "error";
+	function _error_handler($errno, $errstr, $errfile, $errline){
+		// echo $severity.$message.$filepath.$line;
+		//判断是否是致命错误
+		$is_error = (((E_ERROR | E_COMPILE_ERROR | E_CORE_ERROR | E_USER_ERROR) & $errno) === $errno);
+
+		if($is_error)	set_status_header(500);
+
+		//对于不需要的错误直接中断
+		if(($errno & error_reporting()) !== $errno)	return;
+
+		//是否展示错误
+		if(str_ireplace(array('off', 'none', 'no', 'false', 'null'), '', ini_get('display_errors'))){
+			$_error = &load_class('Exceptions', 'core');
+			$_error->show_php_error($errno, $errstr, $errfile, $errline);
+		}
+
+		//如果是致命错误则exit
+		if($is_error)	exit();
+	}
+}
+
+/**
+ * 自定义PHP异常处理函数
+ * 当出现PHP异常时触发此函数
+ */
+if(!function_exists('_exception_handler')){
+
+	function _exception_handler($exception){
+		$_error =& load_class('Exceptions', 'core');
+		if (str_ireplace(array('off', 'none', 'no', 'false', 'null'), '', ini_get('display_errors'))){
+			$_error->show_exception($exception);
+		}
 	}
 }
 
@@ -100,9 +129,9 @@ if(!function_exists('show_error')){
  */
 if(!function_exists('show_404')){
 
-	function show_404($template = 'error_404', $message='The page you requested was not found.'){
+	function show_404($message='The page you requested was not found.', $template = 'error_404'){
 		$_error = &load_class('Exceptions', 'core');
-		echo $_error->show_404($template, $message);
+		echo $_error->show_404($message, $template);
 	}
 }
 
