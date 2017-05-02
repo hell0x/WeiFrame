@@ -17,7 +17,7 @@ class Wei_Router{
 		if ((int)method_exists($controller, $action)) {
             call_user_func_array(array($dispatch, $action), $param);
         } else {
-            show_404('error_404', $controller.'/'.$action.' was not Found');
+            show_404($controller.'/'.$action.' was not Found');
         }
 	}	
 }

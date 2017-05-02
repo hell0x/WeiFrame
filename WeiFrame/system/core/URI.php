@@ -14,8 +14,8 @@ class Wei_URI {
 
 	protected function _parse_uri_string(){
 		//设置控制器，方法，参数的默认值
-		$controller = 'Index';
-		$action = 'Index';
+		$controller = 'index';
+		$action = 'index';
 		$param = array();
 
 		if(!isset($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME'])){
@@ -28,7 +28,7 @@ class Wei_URI {
 		if($uri){
 			$uriArray = explode('/', $uri);
 			$controller = $uriArray[0];
-			$action = $uriArray[1];
+			$action = isset($uriArray[1]) ? $uriArray[1] : 'index';
 			for($i=2; $i<count($uriArray); $i+=2){
 				$param[$uriArray[$i]] = $uriArray[$i+1];
 			}
