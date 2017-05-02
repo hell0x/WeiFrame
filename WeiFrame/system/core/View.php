@@ -25,7 +25,7 @@ class Wei_View{
 			exit($view_path.'does not exist');
 		}
 		if($this->config['auto_cache']){
-			if(file_exists($cache_path) && time()-filemtime($cache_path)<$this->config['cache_time']){
+			if(file_exists($cache_path) && time()-filemtime($cache_path)<=$this->config['cache_time']){
 				return require_once($cache_path);
 			}else{
 				ob_start();
