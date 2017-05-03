@@ -51,18 +51,31 @@ if(!function_exists('load_class')){
  */
 if(!function_exists('get_config')){
 
-	function &get_config(){
-		static $config;
-
-		if(empty($config)){
-			$file_path = CONF_PATH.'config.php';
-			if(file_exists($file_path)){
-				require_once($file_path);
-			}else{
-				exit('The configuration file does not exist.');
+	function &get_config($file = 'config'){
+		
+		if($file=='config'){
+			static $config;
+			if(empty($config)){
+				$file_path = CONF_PATH.'config.php';
+				if(file_exists($file_path)){
+					require_once($file_path);
+				}else{
+					exit('The configuration file does not exist.');
+				}
 			}
+			return $config;
+		}elseif($file=='database'){
+			static $db;
+			if(empty($db)){
+				$file_path = CONF_PATH.'database.php';
+				if(file_exists($file_path)){
+					require_once($file_path);
+				}else{
+					exit('The database file does not exist.');
+				}
+			}
+			return $db;
 		}
-		return $config;
 	}
 }
 
@@ -119,7 +132,7 @@ if(!function_exists('show_error')){
 	function show_error($message, $status_code=500, $template='error_default', $heading="error message"){
 
 		$_error = &load_class('Exceptions', 'core');
-		echo $_error->show_error($message, $status, $template, $heading);
+		echo $_error->show_error($message, $status_code, $template, $heading);
 	}
 }
 

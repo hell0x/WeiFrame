@@ -4,6 +4,10 @@ class Wei_controller{
 	protected $vars = array();		//模板变量
 	protected $tpl;					//视图模板
 
+	public function __construct(){
+		
+	}
+
 	//变量赋值函数
 	final protected function assign($name, $value=''){
 		//如果$name是数组
@@ -21,10 +25,14 @@ class Wei_controller{
 
 	//模板展示
 	final protected function display($tpl){
-		// require_once BASEPATH.'View.php';
-		// $view = new Wei_View($this->vars);
 		$view = &load_class('View', 'core', $this->vars);
 		$view->display($tpl);
+	}
+
+	//数据库初始化
+	protected function database(){
+		$db = &load_class('DB', 'database');
+		return $db;
 	}
 }
 ?>
