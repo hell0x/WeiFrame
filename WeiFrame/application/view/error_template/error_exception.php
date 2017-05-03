@@ -182,12 +182,12 @@ body {
 <div id="wrapper"><a class="logo" href="/"></a>
   <div id="main">
     <header id="header">
-      <h1><span class="icon">!</span><?=$status_code?><span class="sub"><?=$heading?></span></h1>
+      <h1><span class="icon">!</span><span class="sub"></span></h1>
     </header>
     <div id="content">
         <h2>
             <p>Type: <?php echo get_class($exception); ?></p>
-            <p>Message: <?php echo $message; ?></p>
+            <p>Message: <?php  ?></p>
             <p>Filename: <?php echo $exception->getFile(); ?></p>
             <p>Line Number: <?php echo $exception->getLine(); ?></p>
         </h2>

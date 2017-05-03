@@ -36,13 +36,13 @@ class Wei_Exceptions{
 		include($template_path);
 		$buffer = ob_get_contents();
 		ob_end_clean();
-		return $buffer;
+		echo $buffer;
+		exit();
 	}
 
 	public function show_404($message, $template){
 		$heading = 'Not Found';
 		echo $this->show_error($message, 404, $template, $heading);
-		exit();
 	}
 
 	public function show_php_error($errno, $errstr, $errfile, $errline){
@@ -59,6 +59,7 @@ class Wei_Exceptions{
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		echo $buffer;
+		exit();
 	}
 
 	public function show_exception($exception){
@@ -74,6 +75,7 @@ class Wei_Exceptions{
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		echo $buffer;
+		exit();
 	}
 }
 ?>
