@@ -29,8 +29,12 @@ class Wei_URI {
 			$uriArray = explode('/', $uri);
 			$controller = $uriArray[0];
 			$action = isset($uriArray[1]) ? $uriArray[1] : 'index';
-			for($i=2; $i<count($uriArray); $i+=2){
-				$param[$uriArray[$i]] = $uriArray[$i+1];
+			if(count($uriArray)%2 === 0){
+				for($i=2; $i<count($uriArray); $i+=2){
+					$param[$uriArray[$i]] = $uriArray[$i+1];
+				}
+			}else{
+				show_error("URI参数有误");
 			}
 			$this->segments = compact("controller", "action", "param");
 		}else{
