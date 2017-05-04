@@ -13,7 +13,7 @@ class index extends Wei_controller{
 		// $db->driver->delete('wei', "where id=8");
 		$result = $db->driver->select('wei', array('name', 'province'), "where id=9");
 		echo "<pre>";
-		print_r($result);
+		print_r($aresult);
 		echo "</pre>";
 	}
 }
