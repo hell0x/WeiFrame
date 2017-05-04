@@ -121,6 +121,31 @@ if(!function_exists('_exception_handler')){
 }
 
 /**
+ * 自定义PHP终止触发函数
+ */
+if(!function_exists('_shutdown_handler')){
+
+	function _shutdown_handler(){
+		$last_error = error_get_last();
+		if (isset($last_error) &&
+			($last_error['type'] & (E_ERROR | E_PARSE | E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_COMPILE_WARNING))){
+			_error_handler($last_error['type'], $last_error['message'], $last_error['file'], $last_error['line']);
+		}
+		// if ($e = error_get_last()) {
+	 //        switch ($e['type']) {
+	 //            case E_ERROR:
+	 //            case E_PARSE:
+	 //            case E_CORE_ERROR:
+	 //            case E_COMPILE_ERROR:
+	 //            case E_USER_ERROR:
+	 //                _error_handler($e['type'], $e['message'], $e['file'], $e['line']);
+	 //            break;
+	 //        }
+  //   	}
+	}
+}
+
+/**
  * 错误处理函数
  * 可根据需要使用此函数产生错误页面
  * @param 错误信息
