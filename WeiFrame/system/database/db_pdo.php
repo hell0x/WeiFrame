@@ -104,12 +104,31 @@ class db_pdo{
 	}
 
 	/**
-	 * 数据库更新操作
+	 * 数据库删除操作
 	 * @param  表名称
-	 * @param  array 要更新的数据
 	 * @param  条件where
 	 * @return [type]        [description]
 	 */
-	
+	public function delete($table, $where){
+		$this->_sql = "DELETE FROM `" . $table . "` " . $where;
+		return $this->_db->exec($this->_sql);
+	}
+
+	/**
+	 * 数据库查询操作
+	 * @param  表名称
+	 * @param  array 要查询的数据
+	 * @param  条件where
+	 * @return [type]        [description]
+	 */
+	public function select($table, $column = "*", $where=null){
+		if(is_array($column)){
+			$this->_sql = "SELECT `" . implode('`, `', $column) . "` FROM `" . $table . "` " . $where;
+		}else{
+			$this->_sql = "SELECT * FROM `" . $table . "` " . $where;
+		}
+		$query = $this->_db->query($this->_sql);
+		return $query ? $query->fetchAll() : false;
+	}
 }
 ?>
