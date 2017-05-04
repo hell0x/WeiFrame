@@ -25,118 +25,91 @@ class db_pdo{
 	}
 
 	/**
-	 * //数据库添加操作
+	 * 数据库添加操作
 	 * @param  表名称
 	 * @param  array 要插入的数据
-	 * @return [type]        [description]
+	 * @return 新插入数据ID
 	 */
-	// public function insert($table, $datas){
-	// 	$lastIf = array();
-
-	// 	if(!isset($datas[0])){
-	// 		show_error("datas is empty");
-	// 	}
-
-	// 	foreach($datas as $data){
-	// 		$keys = array_keys($data);
-	// 		$values = array();
-	// 		$column = array();
-
-	// 		foreach()
-	// 	}
-	// }
-	 
-	public function insert($table, $datas)
-	{
+	public function insert($table, $datas){
 		$lastId = array();
 
-		// Check indexed or associative array
-		if (!isset($datas[0]))
-		{
-			$datas = array($datas);
+		if(empty($datas)){
+			show_error("datas is empty");
 		}
-
-		foreach ($datas as $data)
-		{
-			// echo "<pre>";
-			// print_r($data);
-			// echo "</pre>";
-			// die;
-			$keys = array_keys($data);
-			$values = array();
-			$columns = array();
-
-			foreach ($data as $key => $value)
-			{
-				array_push($columns, $this->column_quote($key));
-
-				switch (gettype($value))
-				{
-					case 'NULL':
-						$values[] = 'NULL';
-						break;
-
-					case 'array':
-						preg_match("/\(JSON\)\s*([\w]+)/i", $key, $column_match);
-
-						if (isset($column_match[0]))
-						{
-							$values[] = $this->quote(json_encode($value));
-						}
-						else
-						{
-							$values[] = $this->quote(serialize($value));
-						}
-						break;
-
-					case 'boolean':
-						$values[] = ($value ? '1' : '0');
-						break;
-
-					case 'integer':
-					case 'double':
-					case 'string':
-						$values[] = $this->fn_quote($key, $value);
-						break;
-				}
+		
+		foreach($datas as $key => $data){
+			//防止空数组
+			if(empty($key) && empty($data)){
+				continue;
 			}
+			//对$key进行安全过滤
+			$column[] = $key;
 
-			// echo 'INSERT INTO "' . $table . '" (' . implode(', ', $columns) . ') VALUES (' . implode($values, ', ') . ')';
-			// die;
-			$this->exec('INSERT INTO "' . $table . '" (' . implode(', ', $columns) . ') VALUES (' . implode($values, ', ') . ')');
+			switch(gettype($data)){
+				case 'NULL':
+					$values[] = 'NULL';
+					break;
+				case 'boolean':
+					$values[] = ($data ? '1' : '0');
+					break;
+				case 'integer':
+				case 'double':
+				case 'string':
+					$values[] = $this->_db->quote($data);
+					break;
+			}
+		}
+		$this->_sql = "INSERT INTO `".$table."` (`". implode('`, `', $column) ."`) VALUES(". implode(', ', $values) .")";
+		$this->_db->exec($this->_sql);
+		$lastId[] = $this->_db->lastInsertId();
+		return count($lastId) > 1 ? $lastId : $lastId[0];
+	}
 
-			$lastId[] = $this->_db->lastInsertId();
+	/**
+	 * 数据库更新操作
+	 * @param  表名称
+	 * @param  array 要更新的数据
+	 * @param  条件where
+	 * @return [type]        [description]
+	 */
+	public function update($table, $data, $where=null){
+		$fields = array();
+
+		if(empty($data)){
+			show_error("data is empty");
 		}
 
-		return count($lastId) > 1 ? $lastId : $lastId[ 0 ];
+		foreach($data as $key => $val){
+			//防止空数组
+				if(empty($key) && empty($data)){
+					continue;
+				}
+
+			switch(gettype($val)){
+				case 'NULL':
+					$fields[] = "`".$key."` = NULL";
+					break;
+				case 'boolean':
+					$fields[] = "`".$key."` = " . ($val ? '1' : '0');
+					break;
+				case 'integer':
+				case 'double':
+				case 'string':
+					$fields[] = "`".$key."` = " . $this->_db->quote($val);
+					break;
+			}
+		}
+		$this->_sql = "UPDATE `" . $table . "` SET " . implode(', ', $fields) ." ". $where;
+		return $this->_db->exec($this->_sql);
 	}
 
-	protected function column_quote($string)
-	{
-		return '"' . str_replace('.', '"."', preg_replace('/(^#|\(JSON\))/', '', $string)) . '"';
-	}
-
-	public function quote($string)
-	{
-		return $this->_db->quote($string);
-	}
-
-	protected function fn_quote($column, $string)
-	{
-		return (strpos($column, '#') === 0 && preg_match('/^[A-Z0-9\_]*\([^)]*\)$/', $string)) ?
-
-			$string :
-
-			$this->quote($string);
-	}
-
-	public function exec($query)
-	{
-		$this->_sql = $query;
-		// var_dump($query);
-		// die;
-
-		return $this->_db->exec($query);
-	}
+	/**
+	 * 数据库更新操作
+	 * @param  表名称
+	 * @param  array 要更新的数据
+	 * @param  条件where
+	 * @return [type]        [description]
+	 */
+	
 }
 ?>

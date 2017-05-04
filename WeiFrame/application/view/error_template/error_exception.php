@@ -105,7 +105,7 @@ body {
 .logo:hover { opacity: .75 !important }
 #main {
     position: relative;
-    width: 600px;
+    width: 800px;
     margin: 0 auto;
     padding-top: 12%;
     animation: main .8s 1;
@@ -122,7 +122,7 @@ body {
 #main #header h1 {
     position: relative;
     display: block;
-    font: 72px 'TeXGyreScholaBold', Arial, sans-serif;
+    font: 60px 'TeXGyreScholaBold', Arial, sans-serif;
     color: #0061a5;
     text-shadow: 2px 2px #f7f7f7;
     text-align: center;
@@ -157,7 +157,7 @@ body {
 }
 #main #content {
     position: relative;
-    width: 600px;
+    width: 800px;
     background: white;
     -moz-box-shadow: 0 0 0 3px #ededed inset, 0 0 0 1px #a2a2a2, 0 0 20px rgba(0,0,0,.15);
     -webkit-box-shadow: 0 0 0 3px #ededed inset, 0 0 0 1px #a2a2a2, 0 0 20px rgba(0,0,0,.15);
@@ -182,12 +182,11 @@ body {
 <div id="wrapper"><a class="logo" href="/"></a>
   <div id="main">
     <header id="header">
-      <h1><span class="icon">!</span><span class="sub"></span></h1>
+      <h1><span class="icon">!</span>Exception<span class="sub"><?php echo get_class($exception); ?></span></h1>
     </header>
     <div id="content">
         <h2>
-            <p>Type: <?php echo get_class($exception); ?></p>
-            <p>Message: <?php  ?></p>
+            <p>Message: <?php echo $exception->getMessage()?></p>
             <p>Filename: <?php echo $exception->getFile(); ?></p>
             <p>Line Number: <?php echo $exception->getLine(); ?></p>
         </h2>
