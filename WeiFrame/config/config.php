@@ -8,6 +8,6 @@
 	 * 缓存配置
 	 */
 	//1.页面静态缓存
-	$config['auto_cache']   = false;	//是否开启页面自动缓存
+	$config['auto_cache']   = true;	//是否开启页面自动缓存
 	$config['cache_time']	= 60;		//页面静态缓存有效期
 ?>
