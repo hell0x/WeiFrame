@@ -44,7 +44,6 @@ class db_pdo{
 			}
 			//对$key进行安全过滤
 			$column[] = $key;
-
 			switch(gettype($data)){
 				case 'NULL':
 					$values[] = 'NULL';
@@ -55,14 +54,24 @@ class db_pdo{
 				case 'integer':
 				case 'double':
 				case 'string':
-					$values[] = $this->_db->quote($data);
+					// $data = $this->remove_sql_attack($data);
+					$values[] = $this->remove_sql_attack($data);
 					break;
 			}
 		}
-		$this->_sql = "INSERT INTO `".$table."` (`". implode('`, `', $column) ."`) VALUES(". implode(', ', $values) .")";
-		$this->_db->exec($this->_sql);
-		$lastId[] = $this->_db->lastInsertId();
-		return count($lastId) > 1 ? $lastId : $lastId[0];
+		//使用预编译语句
+		$comma = array();
+		$comma = array_pad($comma, count($column), '?');
+		$this->_sql = "INSERT INTO `".$table."` (`". implode('`, `', $column) ."`) VALUES(". implode(', ', $comma) .")";
+		$sth = $this->_db->prepare($this->_sql);
+		foreach($values as $key => $val){
+			$sth->bindParam($key+1, $values[$key], PDO::PARAM_STR);
+		}
+		if($sth->execute()){
+			return $this->_db->lastInsertId();
+		}else{
+			show_error("insert error");
+		}
 	}
 
 	/**
@@ -129,6 +138,15 @@ class db_pdo{
 		}
 		$query = $this->_db->query($this->_sql);
 		return $query ? $query->fetchAll() : false;
+	}
+
+	protected function remove_sql_attack($str){
+		if(!get_magic_quotes_gpc()){
+			$str = addslashes($str);
+		}
+		$str = str_replace("_", "\_", $str);
+		$str = str_replace("%", "\%", $str);
+		return $str;
 	}
 }
 ?>
