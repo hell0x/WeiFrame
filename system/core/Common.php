@@ -86,7 +86,6 @@ if(!function_exists('get_config')){
 if(!function_exists('_error_handler')){
 
 	function _error_handler($errno, $errstr, $errfile, $errline){
-		// echo $severity.$message.$filepath.$line;
 		//判断是否是致命错误
 		$is_error = (((E_ERROR | E_COMPILE_ERROR | E_CORE_ERROR | E_USER_ERROR) & $errno) === $errno);
 
@@ -131,17 +130,6 @@ if(!function_exists('_shutdown_handler')){
 			($last_error['type'] & (E_ERROR | E_PARSE | E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_COMPILE_WARNING))){
 			_error_handler($last_error['type'], $last_error['message'], $last_error['file'], $last_error['line']);
 		}
-		// if ($e = error_get_last()) {
-	 //        switch ($e['type']) {
-	 //            case E_ERROR:
-	 //            case E_PARSE:
-	 //            case E_CORE_ERROR:
-	 //            case E_COMPILE_ERROR:
-	 //            case E_USER_ERROR:
-	 //                _error_handler($e['type'], $e['message'], $e['file'], $e['line']);
-	 //            break;
-	 //        }
-  //   	}
 	}
 }
 
