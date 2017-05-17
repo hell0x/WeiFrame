@@ -1,0 +1,24 @@
+application 应用程序目录
+	controller	控制器
+	model		模板
+	view		视图
+config  	配置文件夹
+	config.php	基本配置文件
+	database.php数据库配置文件
+runtime		
+	cache		缓存文件夹
+	compile		编译文件夹
+	log			日志文件夹
+system
+	core   		框架核心目录
+		Common.php			公共函数
+		Controller.php		控制器基类
+		Exceptions.php		错误异常类
+		Router.php			路由类
+		URI.php				地址解析类
+		View.php			视图基类
+	database	数据库目录
+		DB.php				数据库基类
+		db_pdo.php			pdo操作类封装
+	WeiLead.php   框架引导文件
+index.php	入口文件

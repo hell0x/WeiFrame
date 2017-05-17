@@ -1,30 +1,13 @@
-1. set_error_handler('_error_handler')    (CodeIgniter.php)
-	_error_handler函数
-		a) set_status_header
-			is_cli
-			show_error
-				load_class
-				$_error->show_error
-		b) load_class(加载Exceptions.php)
-			config_item
-			set_status_header
-			is_loaded
-		c) $_error->log_exception   (Exceptions.php)
-			log_message
-				load_class(加载Log.php)
-				$_log[0]->write_log     (Log.php)
-		d) $_error->show_php_error
-			config_item
-			is_cli
+错误处理：
+手动产生错误信息
+	使用show_error()函数 :实例化错误异常类Exceptions，调用show_error()，使用error_default()模板
+PHP报错
+	用set_error_handler()触发_error_handler()函数:实例化错误异常类Exceptions，调用show_php_error()，使用error_php.php模板
+常见404错误
+	调用show_404()函数,最终调用的其实也是Exceptions类里面的show_error，只是因为404错误出现较多，所以设计了专属模板error_404()
+PHP突然中止
+	用register_shutdown_function()触发_shutdown_handler()函数:最终输出最近一次PHP的错误信息
 
-2. set_exception_handler('_exception_handler');
-	_exception_handler函数
-		load_class(加载Exceptions.php)
-		$_error->log_exception
-		$_error->show_exception
-			config_item
-			is_cli
-			set_status_header
-		
-3. register_shutdown_function('_shutdown_handler');
-	_error_handler
+异常处理：
+	PHP异常
+	用set_exception_handler()触发_exception_handler()函数:实例化错误异常类Exceptions，调用show_exception()，使用error_exception.php模板
