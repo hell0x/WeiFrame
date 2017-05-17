@@ -5,10 +5,9 @@
 	<title>Document</title>
 </head>
 <body>
-<form action="./test" method="POST">
+<form action="test.php">
 	<input type="text" name="city"/>
 	<input type="text" name="age"/>
-	<input type="submit" value="submit"/>
 </form>
 </body>
 </html>

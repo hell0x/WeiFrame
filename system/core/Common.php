@@ -232,4 +232,36 @@ if(!function_exists('set_status_header')){
 		header($protocol.' '.$code.' '.$text, TRUE, $code);
 	}
 }
+
+/**
+ * 输入过滤函数
+ * @param 方法.变量
+ * @param 值
+ * @param 过滤方法
+ */
+if(!function_exists('input_filter')){
+
+	function input_filter($key = "", $default, $function = "strip_tags"){
+		if(strpos($key, ".") !== FALSE){
+			list($method, $var) = explode(".", $key, 2);
+			if(!in_array($method, array("get", "post"))){
+				$method = "get";
+			}
+		}else{
+			show_error("input_filter参数有误");
+		}
+		$v = ($method == "get") ? $_GET : $_POST;
+		$result = isset($v[$var]) ? $v[$var] : null;
+		if($result===null && isset($default))
+			$result = $default;
+		if(strpos($function, ",") !== FALSE){
+			foreach(explode(',', $function) as $val)
+				$result = $val($result);
+		}else{
+			echo "$function";
+			$result = $function($result);
+		}
+		return $result;
+	}
+}
 ?>
